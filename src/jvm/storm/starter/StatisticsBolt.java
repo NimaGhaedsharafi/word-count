@@ -32,7 +32,7 @@ public class StatisticsBolt extends BaseRichBolt {
 
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
-        counter = new HashMap<String, Long>();
+        counter = new HashMap<>();
         lastLogTime = System.currentTimeMillis();
         lastClearTime = System.currentTimeMillis();
     }
