@@ -5,11 +5,15 @@ import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Tuple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class StatisticsBolt extends BaseRichBolt {
+
+    private static final Logger logger = LoggerFactory.getLogger(StatisticsBolt.class);
 
     private Map<String, Long> counter;
     private long lastLogTime;
