@@ -51,6 +51,10 @@ public class StatisticsBolt extends BaseRichBolt {
 
         long logPeriodSec = (System.currentTimeMillis() - lastLogTime) / 1000;
         if (logPeriodSec > logIntervalSec) {
+            logger.info("\n*******\n");
+            logger.info("Word count: " + counter.size());
+            logger.info("\n*******\n");
+
             lastLogTime = now;
         }
     }
