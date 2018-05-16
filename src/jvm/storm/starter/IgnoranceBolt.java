@@ -6,6 +6,7 @@ import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Fields;
 import org.apache.storm.tuple.Tuple;
+import org.apache.storm.tuple.Values;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -27,7 +28,10 @@ public class IgnoranceBolt extends BaseRichBolt {
 
     @Override
     public void execute(Tuple tuple) {
-
+        String word = (String) tuple.getValueByField("word");
+        if (!IGNORE_LIST.contains(word)) {
+            collector.emit(new Values(word));
+        }
     }
 
     @Override
