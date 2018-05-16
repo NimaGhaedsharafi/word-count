@@ -34,7 +34,8 @@ public class Topology {
         TopologyBuilder builder = new TopologyBuilder();
         builder.setSpout("twitter", new TwitterSpout());
         builder.setBolt("words", new WordSplitterBolt()).shuffleGrouping("twitter");
-        builder.setBolt("statistics", new StatisticsBolt(10, 60, 50)).shuffleGrouping("words");
+        builder.setBolt("ignorance", new IgnoranceBolt()).shuffleGrouping("words");
+        builder.setBolt("statistics", new StatisticsBolt(10, 60, 50)).shuffleGrouping("ignorance");
 
         Config config = new Config();
         config.setMessageTimeoutSecs(120);
