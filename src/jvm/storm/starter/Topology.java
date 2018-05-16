@@ -41,5 +41,13 @@ public class Topology {
 
         final LocalCluster cluster = new LocalCluster();
         cluster.submitTopology(TOPOLOGY_NAME, config, builder.createTopology());
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                cluster.killTopology(TOPOLOGY_NAME);
+                cluster.shutdown();
+            }
+        });
     }
 }
