@@ -30,5 +30,7 @@ public class Topology {
     public static void main(String[] args) throws Exception {
         TopologyBuilder builder = new TopologyBuilder();
         builder.setSpout("spout", new TwitterSpout());
+        builder.setBolt("words", new WordSplitterBolt()).shuffleGrouping("spout");
+
     }
 }
