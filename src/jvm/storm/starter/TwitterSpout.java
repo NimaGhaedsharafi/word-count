@@ -66,6 +66,12 @@ public class TwitterSpout extends BaseRichSpout {
     }
 
     @Override
+    public void close() {
+        super.close();
+        this.twitterStream.shutdown();
+    }
+
+    @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
 
     }
