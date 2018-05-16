@@ -24,7 +24,7 @@ public class WordSplitterBolt extends BaseRichBolt {
         String[] words = ((Status) tuple.getValueByField("tweet")).getText().toLowerCase().split(" ");
 
         for (String word : words) {
-            collector.emit(new Values("en", word));
+            this.collector.emit(new Values("en", word));
         }
     }
 
