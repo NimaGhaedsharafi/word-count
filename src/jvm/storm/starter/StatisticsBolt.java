@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class StatisticsBolt extends BaseRichBolt {
 
@@ -56,6 +58,32 @@ public class StatisticsBolt extends BaseRichBolt {
             logger.info("\n*******\n");
 
             lastLogTime = System.currentTimeMillis();
+        }
+    }
+
+    private void showTopWords() {
+        // calculate top list:
+        SortedMap<Long, String> top = new TreeMap<>();
+        for (Map.Entry<String, Long> entry : this.counter.entrySet()) {
+            long count = entry.getValue();
+            String word = entry.getKey();
+
+            top.put(count, word);
+            if (top.size() > topListSize) {
+                top.remove(top.firstKey());
+            }
+        }
+
+        // Output top list:
+        for (Map.Entry<Long, String> entry : top.entrySet()) {
+            logger.info("top - " + entry.getValue() + '|' + entry.getKey());
+        }
+
+        // Clear top list
+        long now = System.currentTimeMillis();
+        if (now - lastClearTime > clearIntervalSec * 1000) {
+            counter.clear();
+            lastClearTime = now;
         }
     }
 
