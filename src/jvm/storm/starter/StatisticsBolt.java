@@ -50,11 +50,11 @@ public class StatisticsBolt extends BaseRichBolt {
         count = count == null ? 1L : count + 1;
         this.counter.put(word, count);
 
-
         long logPeriodSec = (System.currentTimeMillis() - this.lastLogTime) / 1000;
         if (logPeriodSec > this.logIntervalSec) {
             logger.info("\n*******\n");
             logger.info("Word count: " + this.counter.size());
+            showTopWords();
             logger.info("\n*******\n");
 
             lastLogTime = System.currentTimeMillis();
