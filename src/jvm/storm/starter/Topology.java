@@ -18,7 +18,6 @@
 package storm.starter;
 
 
-import org.apache.storm.starter.spout.RandomIntegerSpout;
 import org.apache.storm.topology.TopologyBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +30,5 @@ public class Topology {
         TopologyBuilder builder = new TopologyBuilder();
         builder.setSpout("twitter", new TwitterSpout());
         builder.setBolt("words", new WordSplitterBolt()).shuffleGrouping("twitter");
-
     }
 }
