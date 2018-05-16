@@ -9,9 +9,12 @@ import org.apache.storm.tuple.Tuple;
 import java.util.Map;
 
 public class WordSplitterBolt extends BaseRichBolt {
+
+    private OutputCollector collector;
+
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
-
+        this.collector = outputCollector;
     }
 
     @Override
