@@ -4,6 +4,8 @@ import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichSpout;
+import org.apache.storm.tuple.Values;
+import org.apache.storm.utils.Utils;
 import twitter4j.*;
 
 import java.util.Map;
@@ -55,7 +57,12 @@ public class TwitterSpout extends BaseRichSpout {
 
     @Override
     public void nextTuple() {
-
+        Status ret = this.queue.poll();
+        if (ret == null) {
+            Utils.sleep(50);
+        } else {
+            this.collector.emit(new Values(ret));
+        }
     }
 
     @Override
