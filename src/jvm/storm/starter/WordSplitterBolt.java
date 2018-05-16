@@ -5,6 +5,8 @@ import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
 import org.apache.storm.topology.base.BaseRichBolt;
 import org.apache.storm.tuple.Tuple;
+import org.apache.storm.tuple.Values;
+import twitter4j.Status;
 
 import java.util.Map;
 
@@ -19,7 +21,11 @@ public class WordSplitterBolt extends BaseRichBolt {
 
     @Override
     public void execute(Tuple tuple) {
+        String[] words = ((Status) tuple.getValueByField("tweet")).getText().toLowerCase().split(" ");
 
+        for (String word : words) {
+            collector.emit(new Values("en", word));
+        }
     }
 
     @Override
