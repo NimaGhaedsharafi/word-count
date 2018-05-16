@@ -24,7 +24,10 @@ public class StatisticsBolt extends BaseRichBolt {
 
     @Override
     public void execute(Tuple tuple) {
-
+        String word = (String) tuple.getValueByField("word");
+        Long count = this.counter.get(word);
+        count = count == null ? 1L : count + 1;
+        this.counter.put(word, count);
     }
 
     @Override
