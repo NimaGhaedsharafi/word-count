@@ -20,6 +20,13 @@ public class TwitterSpout extends BaseRichSpout {
     private TwitterStream twitterStream;
 
     @Override
+    public Map<String, Object> getComponentConfiguration() {
+        Config config = new Config();
+        config.setMaxTaskParallelism(1);
+        return config;
+    }
+
+    @Override
     public void open(Map map, TopologyContext topologyContext, SpoutOutputCollector spoutOutputCollector) {
         this.queue = new LinkedBlockingQueue<>(1000);
         this.collector = spoutOutputCollector;
@@ -68,20 +75,14 @@ public class TwitterSpout extends BaseRichSpout {
     }
 
     @Override
-    public void close() {
-        super.close();
-        this.twitterStream.shutdown();
-    }
-
-    @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
         outputFieldsDeclarer.declare(new Fields("tweet"));
     }
 
     @Override
-    public Map<String, Object> getComponentConfiguration() {
-        Config config = new Config();
-        config.setMaxTaskParallelism(1);
-        return config;
+    public void close() {
+        super.close();
+        this.twitterStream.shutdown();
     }
+
 }
