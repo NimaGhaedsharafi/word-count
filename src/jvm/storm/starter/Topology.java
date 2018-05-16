@@ -23,9 +23,9 @@ import org.apache.storm.topology.TopologyBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class StatefulTopology {
+public class Topology {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StatefulTopology.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Topology.class);
 
     public static void main(String[] args) throws Exception {
         TopologyBuilder builder = new TopologyBuilder();
