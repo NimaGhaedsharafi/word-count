@@ -22,10 +22,12 @@ public class WordSplitterBolt extends BaseRichBolt {
 
     @Override
     public void execute(Tuple tuple) {
-        String[] words = ((Status) tuple.getValueByField("tweet")).getText().toLowerCase().split(" ");
+        Status tweet = (Status) tuple.getValueByField("tweet");
+        String[] words = tweet.getText().toLowerCase().split(" ");
+        String lang = tweet.getUser().getLang();
 
         for (String word : words) {
-            if (word.length() > 5) {
+            if (word.length() > 5 && lang.compareTo("en") == 0) {
                 this.collector.emit(new Values(word));
             }
         }
