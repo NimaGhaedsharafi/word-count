@@ -43,6 +43,12 @@ public class StatisticsBolt extends BaseRichBolt {
         Long count = this.counter.get(word);
         count = count == null ? 1L : count + 1;
         this.counter.put(word, count);
+
+
+        long logPeriodSec = (System.currentTimeMillis() - lastLogTime) / 1000;
+        if (logPeriodSec > logIntervalSec) {
+            lastLogTime = now;
+        }
     }
 
     @Override
