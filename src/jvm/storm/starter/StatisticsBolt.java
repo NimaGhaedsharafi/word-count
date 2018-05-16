@@ -15,6 +15,21 @@ public class StatisticsBolt extends BaseRichBolt {
     private long lastLogTime;
     private long lastClearTime;
 
+    /** Number of seconds before the top list will be logged to stdout. */
+    private final long logIntervalSec;
+
+    /** Number of seconds before the top list will be cleared. */
+    private final long clearIntervalSec;
+
+    /** Number of top words to store in stats. */
+    private final int topListSize;
+
+    public StatisticsBolt(long logIntervalSec, long clearIntervalSec, int topListSize) {
+        this.logIntervalSec = logIntervalSec;
+        this.clearIntervalSec = clearIntervalSec;
+        this.topListSize = topListSize;
+    }
+
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
         counter = new HashMap<String, Long>();
