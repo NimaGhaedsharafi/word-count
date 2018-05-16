@@ -55,7 +55,7 @@ public class StatisticsBolt extends BaseRichBolt {
             logger.info("Word count: " + counter.size());
             logger.info("\n*******\n");
 
-            lastLogTime = now;
+            lastLogTime = System.currentTimeMillis();
         }
     }
 
