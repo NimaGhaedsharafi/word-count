@@ -1,5 +1,6 @@
 package storm.starter;
 
+import org.apache.storm.Config;
 import org.apache.storm.spout.SpoutOutputCollector;
 import org.apache.storm.task.TopologyContext;
 import org.apache.storm.topology.OutputFieldsDeclarer;
@@ -75,5 +76,12 @@ public class TwitterSpout extends BaseRichSpout {
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
         outputFieldsDeclarer.declare(new Fields("tweet"));
+    }
+
+    @Override
+    public Map<String, Object> getComponentConfiguration() {
+        Config config = new Config();
+        config.setMaxTaskParallelism(1);
+        return config;
     }
 }
