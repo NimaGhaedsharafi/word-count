@@ -1,4 +1,6 @@
 package storm.starter;
 
-public class TwitterSpout {
+import org.apache.storm.topology.base.BaseRichSpout;
+
+public class TwitterSpout extends BaseRichSpout {
 }
