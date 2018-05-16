@@ -18,6 +18,8 @@
 package storm.starter;
 
 
+import org.apache.storm.Config;
+import org.apache.storm.LocalCluster;
 import org.apache.storm.topology.TopologyBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +28,18 @@ public class Topology {
 
     private static final Logger LOG = LoggerFactory.getLogger(Topology.class);
 
+    private static final String TOPOLOGY_NAME = "twitter-stream-top-words";
+
     public static void main(String[] args) throws Exception {
         TopologyBuilder builder = new TopologyBuilder();
         builder.setSpout("twitter", new TwitterSpout());
         builder.setBolt("words", new WordSplitterBolt()).shuffleGrouping("twitter");
         builder.setBolt("statistics", new StatisticsBolt(10, 60, 50)).shuffleGrouping("words");
+
+        Config config = new Config();
+        config.setMessageTimeoutSecs(120);
+
+        final LocalCluster cluster = new LocalCluster();
+        cluster.submitTopology(TOPOLOGY_NAME, config, builder.createTopology());
     }
 }
